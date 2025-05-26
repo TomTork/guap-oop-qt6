@@ -3,14 +3,11 @@
 
 #include <QMainWindow>
 #include <QTextEdit>
-#include <QLineEdit>
 #include <QComboBox>
-#include <QPushButton>
 
 #include "clients/client.h"
 #include "clients/clientwindow.h"
 #include "command/commandmanager.h"
-#include "employees/employee.h"
 #include "employees/employeewindow.h"
 
 class MainWindow final : public QMainWindow {

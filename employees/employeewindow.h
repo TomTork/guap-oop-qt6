@@ -2,18 +2,14 @@
 #define EMPLOYEEWINDOW_H
 
 #include <QWidget>
-#include <QList>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QTableWidget>
-#include <QDialog>
 #include <QLineEdit>
 #include <QFormLayout>
-#include <QMessageBox>
 
 #include "employee.h"
 #include "../command/commandmanager.h"
-#include "../command/changeratecommand.h"
 
 class EmployeeWindow final : public QWidget {
     Q_OBJECT
