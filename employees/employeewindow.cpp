@@ -1,4 +1,6 @@
 #include "employeewindow.h"
+#include "../command/changeratecommand.h"
+#include <QMessageBox>
 
 EmployeeWindow::EmployeeWindow(QWidget* parent) : QWidget(parent) {
     const auto layout = new QVBoxLayout(this);
@@ -144,9 +146,8 @@ void EmployeeWindow::onUpdateRate() {
         }
 
         if (emp->getName() != newName) {
-            emp->setName(newName);  // просто применяем
+            emp->setName(newName);
         }
-
         refreshTable();
     }
 }
