@@ -14,28 +14,23 @@ find_package(Qt6 COMPONENTS
   REQUIRED)
 
 add_executable(untitled1 main.cpp
-        estate.h
-        states.h
-        estate.cpp
-        states.cpp
-        calculationFacade.h
-        calculationfacade.cpp
-        apartmentCalc.h
-        apartmentCalc.cpp
-        luxuriousapartmentCalc.h
-        luxuriousapartmentCalc.cpp
-        townhouseCalc.h
-        cottageCalc.h
-        widget.cpp
-        widget.h
-        ui_widget.h
-        economCalc.h
-        luxuriousCalc.h
-        abstractCalc.h
+        mainwindow.cpp
+        mainwindow.h
+        repair/repairfactory.h
+        command/commandmanager.h
+        command/repaircommand.h
+        employees/employee.h
+        command/changeratecommand.h
+        repair/decoratedrepair.h
+        employees/employeewindow.cpp
+        employees/employeewindow.h
+        clients/clientwindow.cpp
+        clients/clientwindow.h
+        clients/client.h
+        command/changeclientcommand.h
 )
 target_link_libraries(untitled1
   Qt::Core
   Qt::Gui
   Qt::Widgets
 )
-

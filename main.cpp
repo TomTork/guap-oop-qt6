@@ -1,11 +1,11 @@
 #include <QApplication>
-#include "widget.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
-
-    Widget window;
-    window.show();
-
-    return app.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.resize(600, 500);
+    w.setWindowTitle("Ремонтная мастерская телефонов — Саиткулов Дмитрий 4332");
+    w.show();
+    return QApplication::exec();
 }
