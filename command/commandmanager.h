@@ -1,10 +1,7 @@
-// commandmanager.h
-
 #ifndef COMMANDMANAGER_H
 #define COMMANDMANAGER_H
 
 #include <QStack>
-
 
 // Поведенческий паттерн проектирования
 class ICommand {

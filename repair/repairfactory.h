@@ -1,5 +1,3 @@
-// repairfactory.h
-
 #ifndef REPAIRFACTORY_H
 #define REPAIRFACTORY_H
 

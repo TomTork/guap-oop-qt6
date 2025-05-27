@@ -4,8 +4,8 @@
 #include <QString>
 
 class Employee {
-    QString name;
-    double rate;
+    QString name; // имя сотрудника
+    double rate; // ставка сотрудника
 public:
     Employee(const QString& name, const double rate)
         : name(name), rate(rate) {}

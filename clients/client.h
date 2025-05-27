@@ -3,7 +3,7 @@
 #include <QtCore/qstring.h>
 
 class Client {
-    QString name;
+    QString name; // имя клиента
 public:
     explicit Client(const QString &name) : name(name) {}
 
