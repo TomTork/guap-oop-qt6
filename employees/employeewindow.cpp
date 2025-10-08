@@ -5,6 +5,10 @@
 EmployeeWindow::EmployeeWindow(QWidget* parent) : QWidget(parent) {
     const auto layout = new QVBoxLayout(this);
 
+    const auto search = new QLineEdit();
+    search->setPlaceholderText("Поиск");
+    layout->addWidget(search);
+
     table = new QTableWidget(this);
     table->setColumnCount(2);
     table->setHorizontalHeaderLabels({"Имя", "Ставка"});
@@ -29,8 +33,27 @@ EmployeeWindow::EmployeeWindow(QWidget* parent) : QWidget(parent) {
     connect(updateRateButton, &QPushButton::clicked, this, &EmployeeWindow::onUpdateRate);
     connect(undoButton, &QPushButton::clicked, this, &EmployeeWindow::onUndo);
     connect(redoButton, &QPushButton::clicked, this, &EmployeeWindow::onRedo);
+    connect(search, &QLineEdit::textChanged, this, &EmployeeWindow::onSearch);
 
     refreshTable();
+}
+
+void EmployeeWindow::onSearch(const QString& text) {
+    if (text.isEmpty()) {
+        for (int i = 0; i < table->rowCount(); i++) {
+            table->setRowHidden(i, false);
+        }
+        return;
+    }
+    const QString searchText = text.toLower();
+    for (int i = 0; i < table->rowCount(); ++i) {
+        table->setRowHidden(i, true);
+    }
+    for (int i = 0; i < employees.size(); ++i) {
+        if (employees[i]->getName().toLower().contains(searchText)) {
+            table->setRowHidden(i, false);
+        }
+    }
 }
 
 void EmployeeWindow::refreshTable() {

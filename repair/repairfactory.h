@@ -3,6 +3,7 @@
 
 #include <QString>
 
+// порождающий шаблон проектирования
 class RepairType {
 public:
     virtual QString process(const QString& phoneModel) = 0;

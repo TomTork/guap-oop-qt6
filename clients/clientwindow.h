@@ -33,6 +33,7 @@ public:
         void onEditClient();
         void onUndo();
         void onRedo();
+        void onSearch(const QString& text);
     signals:
     void clientListUpdated();
 };

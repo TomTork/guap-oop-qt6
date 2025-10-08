@@ -28,6 +28,15 @@ add_executable(untitled1 main.cpp
         clients/clientwindow.h
         clients/client.h
         command/changeclientcommand.h
+        devices/deviceswindow.cpp
+        devices/deviceswindow.h
+        devices/device.h
+        devices/device.cpp
+        command/changedevicecommand.h
+        warranty/warranty.h
+        warranty/warrantywindow.cpp
+        warranty/warrantywindow.h
+        command/changewarrantycommand.h
 )
 target_link_libraries(untitled1
   Qt::Core

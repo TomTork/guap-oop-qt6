@@ -36,6 +36,7 @@ private:
     void onUpdateRate();
     void onUndo();
     void onRedo();
+    void onSearch(const QString& text);
 
     signals:
     void employeeListUpdated();
