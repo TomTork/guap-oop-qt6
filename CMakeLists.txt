@@ -37,6 +37,10 @@ add_executable(untitled1 main.cpp
         warranty/warrantywindow.cpp
         warranty/warrantywindow.h
         command/changewarrantycommand.h
+        equipment/equipment.h
+        equipment/equipmentwindow.cpp
+        equipment/equipmentwindow.h
+        command/changeequipmentcommand.h
 )
 target_link_libraries(untitled1
   Qt::Core

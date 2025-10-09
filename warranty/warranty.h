@@ -4,20 +4,18 @@
 #include <QString>
 
 class Warranty {
-    QString name;
-    int durationMonths;
-    double cost;
+    QString name; // название гарантии
+    int durationMonths; // длительность гарантии
+    double cost; // стоимость гарантии
 
 public:
     Warranty(const QString& name = "", int durationMonths = 0, double cost = 0.0)
         : name(name), durationMonths(durationMonths), cost(cost) {}
 
-    // Getters
     QString getName() const { return name; }
     int getDurationMonths() const { return durationMonths; }
     double getCost() const { return cost; }
 
-    // Setters
     void setName(const QString& newName) { name = newName; }
     void setDurationMonths(int months) { durationMonths = months; }
     void setCost(double newCost) { cost = newCost; }

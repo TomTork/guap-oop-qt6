@@ -2,23 +2,20 @@
 #define DEVICE_H
 
 #include <QString>
-
-class Client;  // Forward declaration
+#include "../clients/client.h"
 
 class Device {
-    QString name;
-    QString serialNumber;
-    Client* client;
+    QString name; // название девайса
+    QString serialNumber; // серийный номер
+    Client* client; // привязанный клиент
 
 public:
     Device(const QString& name, const QString& serialNumber, Client* client);
     
-    // Getters
     QString getName() const;
     QString getSerialNumber() const;
     Client* getClient() const;
     
-    // Setters
     void setName(const QString& newName);
     void setSerialNumber(const QString& newSerial);
     void setClient(Client* newClient);

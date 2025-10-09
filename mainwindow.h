@@ -10,18 +10,19 @@
 #include "command/commandmanager.h"
 #include "devices/deviceswindow.h"
 #include "employees/employeewindow.h"
+#include "equipment/equipmentwindow.h"
 #include "warranty/warrantywindow.h"
 
 class MainWindow final : public QMainWindow {
     Q_OBJECT
 
     QTextEdit* output;
-    // QLineEdit* phoneInput;
     QComboBox* repairTypeCombo;
     QComboBox* employeeCombo;
     QComboBox* clientCombo;
     QComboBox* deviceCombo;
     QComboBox* warrantyCombo;
+    QComboBox* equipmentCombo;
 
     CommandManager manager;
 
@@ -29,6 +30,7 @@ class MainWindow final : public QMainWindow {
     ClientWindow* clientPage;
     DevicesWindow* devicesPage;
     WarrantyWindow* warrantyPage;
+    EquipmentWindow* equipmentPage;
 
 public:
     MainWindow();
@@ -44,6 +46,7 @@ public:
         void updateClientList() const;
         void updateDeviceList() const;
         void updateWarrantyList() const;
+        void updateEquipmentList() const;
 };
 
 #endif // MAINWINDOW_H

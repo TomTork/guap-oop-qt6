@@ -27,11 +27,13 @@ MainWindow::MainWindow() {
     const auto clients = new QPushButton("Клиенты");
     const auto devices = new QPushButton("Девайсы");
     const auto warranties = new QPushButton("Гарантии");
+    const auto equipments = new QPushButton("Оборудование");
     actions->addWidget(service);
     actions->addWidget(employees);
     actions->addWidget(clients);
     actions->addWidget(devices);
     actions->addWidget(warranties);
+    actions->addWidget(equipments);
     layout->addLayout(actions);
 
     auto* servicePage = new QWidget();
@@ -58,6 +60,8 @@ MainWindow::MainWindow() {
     deviceCombo->setPlaceholderText("Выберите устройство");
     warrantyCombo = new QComboBox(this);
     warrantyCombo->setPlaceholderText("Выберите гарантию");
+    equipmentCombo = new QComboBox(this);
+    equipmentCombo->setPlaceholderText("Выберите оборудование");
 
     const auto saveDataToCsv = new QPushButton("Сохранить данные в CSV");
 
@@ -66,6 +70,7 @@ MainWindow::MainWindow() {
     serviceLayout->addWidget(clientCombo);
     serviceLayout->addWidget(deviceCombo);
     serviceLayout->addWidget(warrantyCombo);
+    serviceLayout->addWidget(equipmentCombo);
     serviceLayout->addWidget(repairBtn);
     const auto buttonsLayout = new QHBoxLayout();
     buttonsLayout->addWidget(undoBtn);
@@ -83,6 +88,7 @@ MainWindow::MainWindow() {
     clientPage = new ClientWindow();
     devicesPage = new DevicesWindow(&clientPage->clients);
     warrantyPage = new WarrantyWindow();
+    equipmentPage = new EquipmentWindow();
 
     auto* stacked = new QStackedWidget();
     stacked->addWidget(servicePage);
@@ -90,6 +96,7 @@ MainWindow::MainWindow() {
     stacked->addWidget(clientPage);
     stacked->addWidget(devicesPage);
     stacked->addWidget(warrantyPage);
+    stacked->addWidget(equipmentPage);
     layout->addWidget(stacked);
 
     connect(service, &QPushButton::clicked, [stacked]() { stacked->setCurrentIndex(0); });
@@ -97,10 +104,12 @@ MainWindow::MainWindow() {
     connect(clients, &QPushButton::clicked, [stacked]() { stacked->setCurrentIndex(2); });
     connect(devices, &QPushButton::clicked, [stacked]() { stacked->setCurrentIndex(3); });
     connect(warranties, &QPushButton::clicked, [stacked]() { stacked->setCurrentIndex(4); });
+    connect(equipments, &QPushButton::clicked, [stacked]() { stacked->setCurrentIndex(5); });
     connect(employeePage, &EmployeeWindow::employeeListUpdated, this, &MainWindow::updateEmployeeList);
     connect(clientPage, &ClientWindow::clientListUpdated, this, &MainWindow::updateClientList);
     connect(devicesPage, &DevicesWindow::deviceListUpdated, this, &MainWindow::updateDeviceList);
     connect(warrantyPage, &WarrantyWindow::warrantyListUpdated, this, &MainWindow::updateWarrantyList);
+    connect(equipmentPage, &EquipmentWindow::equipmentListUpdated, this, &MainWindow::updateEquipmentList);
 
     setCentralWidget(central);
 }
@@ -130,10 +139,15 @@ void MainWindow::handleRepair() {
     if (const int index = clientCombo->currentIndex(); index >= 0 && index < clientPage->clients.size())
         selectedClient = clientPage->clients[index];
 
-    const QString costString = QString(" стоимость услуги: %1; клиент: %2; гарантия: %3")
+    const Equipment* selectedEquipment = nullptr;
+    if (const int index = equipmentCombo->currentIndex(); index >= 0 && index < equipmentPage->equipments.size())
+        selectedEquipment = equipmentPage->equipments[index];
+
+    const QString costString = QString(" стоимость услуги: %1; клиент: %2; гарантия: %3; оборудование: %4")
         .arg((selectedEmployee ? selectedEmployee->getRate() : 0) + repair->cost() + (selectedWarranty ? selectedWarranty->getCost() : 0))
         .arg(selectedClient ? selectedClient->getName() : "<не выбран>")
-        .arg(selectedWarranty ? selectedWarranty->getName().toStdString() + " (" + std::to_string(selectedWarranty->getDurationMonths()) + ")" : "<не выбран>");
+        .arg(selectedWarranty ? selectedWarranty->getName().toStdString() + " (" + std::to_string(selectedWarranty->getDurationMonths()) + ")" : "<не выбран>")
+        .arg(selectedEquipment ? selectedEquipment->getName() : "<не выбрано>");
 
     auto* decorated = new class DecoratedRepair(repair, costString);
     manager.execute(new RepairCommand(selectedDevice->getName(), decorated, output));
@@ -183,6 +197,13 @@ void MainWindow::updateWarrantyList() const {
             .arg(warranty->getDurationMonths());
 
         warrantyCombo->addItem(displayText, QVariant::fromValue(const_cast<Warranty*>(warranty)));
+    }
+}
+
+void MainWindow::updateEquipmentList() const {
+    equipmentCombo->clear();
+    for (const auto* equipment : equipmentPage->equipments) {
+        equipmentCombo->addItem(equipment->getName(), QVariant::fromValue(const_cast<Equipment*>(equipment)));
     }
 }
 
