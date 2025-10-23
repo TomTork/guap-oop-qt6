@@ -95,7 +95,7 @@ void ClientWindow::onAddClient() {
 }
 
 void ClientWindow::onRemoveClient() {
-    int row = table->currentRow();
+    const int row = table->currentRow();
     if (row < 0 || row >= clients.size()) {
         QMessageBox::warning(this, "Ошибка", "Выберите клиента для удаления");
         return;
@@ -110,7 +110,7 @@ void ClientWindow::onRemoveClient() {
 }
 
 void ClientWindow::onEditClient() {
-    int row = table->currentRow();
+    const int row = table->currentRow();
     if (row < 0 || row >= clients.size()) {
         QMessageBox::warning(this, "Ошибка", "Выберите клиента для редактирования");
         return;

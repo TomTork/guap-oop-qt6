@@ -10,7 +10,7 @@
 #include "../command/commandmanager.h"
 #include "../command/changewarrantycommand.h"
 
-class WarrantyWindow : public QWidget {
+class WarrantyWindow final : public QWidget {
     Q_OBJECT
 
     QTableWidget* table;

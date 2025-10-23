@@ -10,13 +10,13 @@
 #include "../command/commandmanager.h"
 #include "../command/changedevicecommand.h"
 
-class DevicesWindow : public QWidget {
+class DevicesWindow final : public QWidget {
     Q_OBJECT
 
     QTableWidget* table;
     QPushButton *addButton, *removeButton, *editButton, *undoButton, *redoButton;
     QList<Device*> devices;
-    QList<Client*>* clientsList;  // Reference to the clients list from ClientWindow
+    QList<Client*>* clientsList;
     CommandManager cmdManager;
     
     void refreshTable();
@@ -30,13 +30,11 @@ private slots:
     void onRedo();
     void onUpdateClientsList();
     
-    // Helper method to update a device using command pattern
     void updateDevice(Device* device, const QString& newName, const QString& newSerialNumber, Client* newClient = nullptr);
     
 public:
     explicit DevicesWindow(QList<Client*>* clients, QWidget* parent = nullptr);
     
-    // Getter for the devices list
     const QList<Device*>& getDevices() const { return devices; }
     
 signals:

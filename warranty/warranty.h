@@ -9,7 +9,7 @@ class Warranty {
     double cost; // стоимость гарантии
 
 public:
-    Warranty(const QString& name = "", int durationMonths = 0, double cost = 0.0)
+    explicit Warranty(const QString& name = "", const int durationMonths = 0, const double cost = 0.0)
         : name(name), durationMonths(durationMonths), cost(cost) {}
 
     QString getName() const { return name; }
@@ -17,8 +17,8 @@ public:
     double getCost() const { return cost; }
 
     void setName(const QString& newName) { name = newName; }
-    void setDurationMonths(int months) { durationMonths = months; }
-    void setCost(double newCost) { cost = newCost; }
+    void setDurationMonths(const int months) { durationMonths = months; }
+    void setCost(const double newCost) { cost = newCost; }
 };
 
 #endif // WARRANTY_H

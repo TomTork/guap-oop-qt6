@@ -57,7 +57,7 @@ void DevicesWindow::onSearch(const QString& text) {
 
     for (int i = 0; i < devices.size(); ++i) {
         const Device* device = devices[i];
-        bool matches = device->getName().toLower().contains(searchText) ||
+        const bool matches = device->getName().toLower().contains(searchText) ||
                       device->getSerialNumber().toLower().contains(searchText) ||
                       (device->getClient() && device->getClient()->getName().toLower().contains(searchText));
         
@@ -70,7 +70,7 @@ void DevicesWindow::onSearch(const QString& text) {
 void DevicesWindow::refreshTable() {
     table->setRowCount(devices.size());
     for (int i = 0; i < devices.size(); ++i) {
-        Device* device = devices[i];
+        const Device* device = devices[i];
         table->setItem(i, 0, new QTableWidgetItem(device->getName()));
         table->setItem(i, 1, new QTableWidgetItem(device->getSerialNumber()));
         
@@ -123,8 +123,8 @@ void DevicesWindow::onAddDevice() {
             return;
         }
 
-        Client* selectedClient = clientCombo.currentData().value<Client*>();
-        Device* newDevice = new Device(name, serial, selectedClient);
+        auto* selectedClient = clientCombo.currentData().value<Client*>();
+        const auto newDevice = new Device(name, serial, selectedClient);
         devices.append(newDevice);
         refreshTable();
         emit deviceListUpdated();
@@ -138,10 +138,9 @@ void DevicesWindow::onRemoveDevice() {
         return;
     }
 
-    const QString name = devices[row]->getName();
-    if (QMessageBox::question(this, "Удаление", 
-        "Удалить устройство: " + name + "?") == QMessageBox::Yes) {
-        Device* device = devices.takeAt(row);
+    if (const QString name = devices[row]->getName(); QMessageBox::question(this, "Удаление",
+                                                                            "Удалить устройство: " + name + "?") == QMessageBox::Yes) {
+        const Device* device = devices.takeAt(row);
         delete device;
         refreshTable();
         emit deviceListUpdated();
@@ -150,7 +149,7 @@ void DevicesWindow::onRemoveDevice() {
 }
 
 void DevicesWindow::onEditDevice() {
-    int row = table->currentRow();
+    const int row = table->currentRow();
     if (row < 0 || row >= devices.size()) {
         QMessageBox::warning(this, "Ошибка", "Выберите устройство для редактирования");
         return;
@@ -194,7 +193,7 @@ void DevicesWindow::onEditDevice() {
     if (dialog.exec() == QDialog::Accepted) {
         const QString newName = nameEdit.text().trimmed();
         const QString newSerial = serialEdit.text().trimmed();
-        Client* newClient = clientCombo.currentData().value<Client*>();
+        auto* newClient = clientCombo.currentData().value<Client*>();
         
         if (newName.isEmpty() || newSerial.isEmpty()) {
             QMessageBox::warning(this, "Ошибка", "Все поля должны быть заполнены");
@@ -209,10 +208,8 @@ void DevicesWindow::updateDevice(Device* device, const QString& newName, const Q
     if (!device) return;
     
     if (device->getClient() != newClient) {
-        // Client changed
         cmdManager.execute(new ChangeDeviceCommand(device, newClient));
     } else {
-        // Only name/serial changed
         cmdManager.execute(new ChangeDeviceCommand(device, newName, newSerialNumber));
     }
     
@@ -233,19 +230,5 @@ void DevicesWindow::onRedo() {
 }
 
 void DevicesWindow::onUpdateClientsList() {
-    // This method will be called when the clients list is updated
-    // We need to refresh any UI elements that depend on the clients list
-    // For example, if we have a combo box showing clients, we would update it here
-    
-    // If you have a combo box or other UI elements that show clients,
-    // you would update them here. For example:
-    // 
-    // clientCombo->clear();
-    // for (Client* client : *clientsList) {
-    //     clientCombo->addItem(client->getName(), QVariant::fromValue(client));
-    // }
-    
-    // Since we don't have any persistent UI elements showing clients list,
-    // we can leave this empty or add a refresh of the table if needed
     refreshTable();
 }

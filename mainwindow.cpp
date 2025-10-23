@@ -177,8 +177,7 @@ void MainWindow::updateClientList() const {
 
 void MainWindow::updateDeviceList() const {
     deviceCombo->clear();
-    const auto& devices = devicesPage->getDevices();
-    for (const auto* device : devices) {
+    for (const auto& devices = devicesPage->getDevices(); const auto* device : devices) {
         QString displayText = QString("%1 (Серийный: %2)")
             .arg(device->getName())
             .arg(device->getSerialNumber());
@@ -189,8 +188,7 @@ void MainWindow::updateDeviceList() const {
 
 void MainWindow::updateWarrantyList() const {
     warrantyCombo->clear();
-    const auto& warranties = warrantyPage->getWarranties();
-    for (const auto* warranty : warranties) {
+    for (const auto& warranties = warrantyPage->getWarranties(); const auto* warranty : warranties) {
         QString displayText = QString("%1 — %2 (%3)")
             .arg(warranty->getName())
             .arg(warranty->getCost())
@@ -208,8 +206,8 @@ void MainWindow::updateEquipmentList() const {
 }
 
 void MainWindow::saveCsvFile(QWidget *parent, const QString &csvData) {
-    QString downloadsPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-    QString defaultFile = downloadsPath + QDir::separator() + "данные.csv";
+    const QString downloadsPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+    const QString defaultFile = downloadsPath + QDir::separator() + "данные.csv";
     QString fileName = QFileDialog::getSaveFileName(
         parent,
         QObject::tr("Сохранить CSV файл"),

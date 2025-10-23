@@ -95,14 +95,13 @@ void EquipmentWindow::onAddEquipment() {
 }
 
 void EquipmentWindow::onRemoveEquipment() {
-    int row = table->currentRow();
+    const int row = table->currentRow();
     if (row < 0 || row >= equipments.size()) {
         QMessageBox::warning(this, "Ошибка", "Выберите оборудование для удаления");
         return;
     }
 
-    const QString name = equipments[row]->getName();
-    if (QMessageBox::question(this, "Удаление", "Удалить оборудование: " + name + "?") == QMessageBox::Yes) {
+    if (const QString name = equipments[row]->getName(); QMessageBox::question(this, "Удаление", "Удалить оборудование: " + name + "?") == QMessageBox::Yes) {
         delete equipments.takeAt(row);
         refreshTable();
         QMessageBox::information(this, "Удалено", "Клиент успешно удалён");
@@ -110,7 +109,7 @@ void EquipmentWindow::onRemoveEquipment() {
 }
 
 void EquipmentWindow::onEditEquipment() {
-    int row = table->currentRow();
+    const int row = table->currentRow();
     if (row < 0 || row >= equipments.size()) {
         QMessageBox::warning(this, "Ошибка", "Выберите оборудование для редактирования");
         return;
